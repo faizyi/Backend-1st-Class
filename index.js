@@ -1,11 +1,22 @@
-const express = require('express')
+// const express = require('express')
+import express from 'express'
 const app = express()
 
 const users = [
     {
-        num : '01',
+        id : 1,
         name : 'faiz',
-        ins : 'saylani',
+        email : 'faiz@gmail.com',
+    },
+    {
+        id : 2,
+        name : 'ahmed',
+        email : 'ahmed@gmail.com',
+    },
+    {
+        id : 3,
+        name : 'awais',
+        email : 'awais@gmail.com',
     }
 ]
 app.use(express.json())
@@ -14,13 +25,19 @@ app.listen(port, ()=>{
     console.log('Server is running');
 })
 
-app.get('/',(req,res)=>{
+app.get('/user',(req,res)=>{
     res.send(users)
-    // res.send('hello faiz')
 })
 
-app.post('/', (req,res)=>{
+app.post('/user', (req,res)=>{
     console.log('data is coming', req.body);
     users.push(req.body)
 })
-
+app.delete('/user/:id',(req,res)=>{
+    const index = users.findIndex(data =>data.id == req.params.id)
+    users.splice(index, 1)
+})
+app.put('/user/:id',(req,res)=>{
+    const index = users.findIndex(data => data.id === req.params.id)
+    users.splice(index , 1 , req.body)
+})
